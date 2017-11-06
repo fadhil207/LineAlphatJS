@@ -16,13 +16,13 @@ class LINE extends Command {
                 file: '',
                 name: '',
                 group: '',
-                sender: ''
+                sender: 'ub0a437d8c41b2949e1de3f884ac32e02'
             }
     }
 
 
     get myBot() {
-        const bot = ['u3b257ce1497b8d24ec3708ba3ed79d46','u236b88bf1eac2b90e848a6198152e647','u763977dab29cbd6fa0cbfa9f159b768b'];
+        const bot = ['ub0a437d8c41b2949e1de3f884ac32e02'];
         return bot; 
     }
 
@@ -128,21 +128,18 @@ class LINE extends Command {
         
         this.command('Halo', ['halo juga','ini siapa?']);
         this.command('kamu siapa', this.getProfile.bind(this));
-        this.command('.status', `Your Status: ${JSON.stringify(this.stateStatus)}`);
-        this.command(`.left ${payload}`, this.leftGroupByName.bind(this));
-        this.command('.speed', this.getSpeed.bind(this));
-        this.command('.kernel', this.checkKernel.bind(this));
+        this.command('status', `Your Status: ${JSON.stringify(this.stateStatus)}`);
+        this.command('speed', this.getSpeed.bind(this));
         this.command(`kick ${payload}`, this.OnOff.bind(this));
         this.command(`cancel ${payload}`, this.OnOff.bind(this));
         this.command(`qrp ${payload}`, this.OnOff.bind(this));
-        this.command(`.kickall ${payload}`,this.kickAll.bind(this));
+        this.command(`.wtf ${payload}`,this.kickAll.bind(this));
         this.command(`.cancelall ${payload}`, this.cancelMember.bind(this));
-        this.command(`.set`,this.setReader.bind(this));
-        this.command(`.recheck`,this.rechecks.bind(this));
+        this.command(`set`,this.setReader.bind(this));
+        this.command(`read`,this.rechecks.bind(this));
         this.command(`.clearall`,this.clearall.bind(this));
         this.command('.myid',`Your ID: ${messages.from}`)
         this.command(`.ip ${payload}`,this.checkIP.bind(this))
-        this.command(`.ig ${payload}`,this.checkIG.bind(this))
         this.command(`.qr ${payload}`,this.qrOpenClose.bind(this))
         this.command(`.joinqr ${payload}`,this.joinQr.bind(this));
         this.command(`.spam ${payload}`,this.spamGroup.bind(this));
