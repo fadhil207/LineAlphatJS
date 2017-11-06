@@ -21,20 +21,6 @@ class Command extends LineAPI {
         return displayName;
     }
 
-
-    async cancelMember() {
-        let groupID;
-        if(this.payload.length > 0) {
-            let [ groups ] = await this._findGroupByName(this.payload.join(' '));
-            groupID = groups.id;
-        } 
-        let gid = groupID || this.messages.to;
-        let { listPendingInvite } = await this.searchGroup(gid);
-        if(listPendingInvite.length > 0){
-            this._cancel(gid,listPendingInvite);
-        }
-    }
-
     async searchGroup(gid) {
         let listPendingInvite = [];
         let thisgroup = await this._getGroups([gid]);
@@ -90,14 +76,6 @@ class Command extends LineAPI {
         }
     }
 
-    async leftGroupByName(name) {
-        let payload = name || this.payload.join(' ');
-        let gid = await this._findGroupByName(payload);
-        for (let i = 0; i < gid.length; i++) {
-            this._leaveGroup(gid[i].id);
-        }
-        return;
-    }
     
     async recheck(cs,group) {
         let users;
@@ -137,17 +115,6 @@ class Command extends LineAPI {
         this._sendFile(this.messages,`${__dirname}/../download/${this.payload.join(' ')}.m4a`,3);
     }
 
-    checkKernel() {
-        exec('uname -a',(err, sto) => {
-            if(err) {
-                this._sendMessage(this.messages, err);
-                return
-            }
-            this._sendMessage(this.messages, sto);
-            return;
-        });
-    }
-
     setReader() {
         this._sendMessage(this.messages, `Setpoint... type '.recheck' for lookup !`);
         this.removeReaderByGroup(this.messages.to);
@@ -166,8 +133,8 @@ class Command extends LineAPI {
             contentType: 13,
             contentPreview: null,
             contentMetadata: 
-            { mid: 'u236b88bf1eac2b90e848a6198152e647',
-            displayName: 'Alfath Dirk' }
+            { mid: 'ub0a437d8c41b2949e1de3f884ac32e02',
+            displayName: '' }
         }
         Object.assign(this.messages,msg);
         this._sendMessage(this.messages);
@@ -178,7 +145,7 @@ class Command extends LineAPI {
             file: '',
             name: '',
             group: '',
-            sender: ''
+            sender: 'ub0a437d8c41b2949e1de3f884ac32e02'
         };
     }
 
@@ -313,24 +280,6 @@ class Command extends LineAPI {
             return;
         } 
         return this._sendMessage(this.messages, ' Kick Failed check status or admin only !');
-    }
-
-    async checkIG() {
-        try {
-            let { userProfile, userName, bio, media, follow } = await this._searchInstagram(this.payload[0]);
-            await this._sendFileByUrl(this.messages,userProfile);
-            await this._sendMessage(this.messages, `${userName}\n\nBIO:\n${bio}\n\n\uDBC0 ${follow} \uDBC0`)
-            if(Array.isArray(media)) {
-                for (let i = 0; i < media.length; i++) {
-                    await this._sendFileByUrl(this.messages,media[i]);
-                }
-            } else {
-                this._sendMessage(this.messages,media);
-            }
-        } catch (error) {
-            this._sendMessage(this.messages,`Error: ${error}`);
-        }
-        return;
     }
 }
 
